@@ -6,7 +6,7 @@ import PIL.Image
 # App title
 st.set_page_config(
     page_title = "Chatbot", 
-    page_icon = "D:\chatbot\openai-white-logomark.svg" , layout = "wide", 
+    layout = "wide", 
     initial_sidebar_state = "auto", 
     menu_items = None
 )
@@ -29,13 +29,12 @@ with st.sidebar:
         index = None, 
         key = 'selected_model', 
         placeholder='select a model', 
-        help = "A set of models that improve on GPT-3 and can understand as well as generate natural language or code",
         disabled=not api_key)
     
     if api_key and not selected_model:
         st.warning("Please select a model.")
     
-    stream = st.sidebar.toggle(label=':blue[Stream Output]', help = '(simulation) Return partial results as they become available, instead of waiting until the computation is done.', disabled=not api_key)
+    stream = st.sidebar.toggle(label=':blue[Stream Output]', help = 'Return partial results as they become available, instead of waiting until the computation is done.', disabled=not api_key)
 
     file_uploader = st.sidebar.file_uploader(
         label = ':blue[Upload an Image]',

@@ -83,13 +83,19 @@ def generate_response_gemini_pro_vision(message, imgs):
     genai.configure(api_key=api_key)
     model = genai.GenerativeModel('gemini-pro-vision')
     if stream:
-        response = model.generate_content([message, imgs], stream=True)
+        prompt = [message]
+        for i in imgs:
+            prompt.append(i)
+        response = model.generate_content(prompt, stream=True)
         responses = ""
         for chunk in response:
             responses += chunk.text or ""
         return responses
     else:
-        response = model.generate_content([message, imgs])
+        prompt = [message]
+        for i in imgs:
+            prompt.append(i)
+        response = model.generate_content(prompt)
         return response.text
 
 # user-provided prompt message
@@ -115,7 +121,9 @@ if st.session_state.history[-1]["role"] != "model":
                 assistant_response = generate_response_gemini_pro(prompt)
             elif selected_model[-1] == 'n':
                 if file_uploader is not None:
-                    imgs = PIL.Image.open(file_uploader)
+                    imgs = []
+                    for file_ in file_uploader:
+                        imgs.append(PIL.Image.open(file_))
                     assistant_response = generate_response_gemini_pro_vision(prompt, imgs)
             placeholder = st.empty()
             full_response = ''

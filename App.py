@@ -39,7 +39,7 @@ with st.sidebar:
     file_uploader = st.sidebar.file_uploader(
         label = ':blue[Upload an Image]',
         type = ['png', 'jpg', 'jpeg', 'webp'],
-        accept_multiple_files = False,
+        accept_multiple_files = True,
         key = None,
         help = 'Only for gemini pro vision model',
         disabled=not selected_model or selected_model[-1] != 'n'
